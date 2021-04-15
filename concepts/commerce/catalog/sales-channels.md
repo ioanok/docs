@@ -23,10 +23,10 @@ Usually, sales channels are \(if possible identified by there URL\), however the
 
 A sales channel can have multiple associated domain configurations. These domains are used to resolve pre-configurations for currencies, snippet sets and languages based on routes. This way you can configure various domains such as:
 
-* [https://fruitsandveggies.com/](https://fruitsandveggies.com/)
+* [https://example.com/](https://example.com/)
   * Locale en-GB, British English, Pounds
-* [https://fruitsandveggies.com/de](https://fruitsandveggies.com/de)
+* [https://example.com/de](https://example.com/de)
   * Locale de-DE, German, Euro
-* [https://fruitsandveggies.es/](https://fruitsandveggies.es/)
+* [https://example.es/](https://example.es/)
   * Locale es-ES, Spanish, Euro
 
