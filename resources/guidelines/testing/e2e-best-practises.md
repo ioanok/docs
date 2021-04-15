@@ -1,52 +1,53 @@
 # Best practises on writing end-to-end tests
 
-A typical E2E test can be complex, with a large number of steps that take a lot of time to complete manually. Because of this complexity, E2E tests can be difficult to automate and slow to execute. The following tips can help reduce the cost and pain of E2E testing and still reap the benefits.
+A typical E2E test can be complex, with many steps that take a lot of time to complete manually. Because of this complexity, E2E tests can be difficult to automate and slow to execute. The following tips can help reduce the cost and pain of E2E testing and still reap the benefits.
 
-Cypress got you covered with their best practises as well: So please also look at their [best practises](https://docs.cypress.io/guides/references/best-practices.html) to get to know their patterns.
+Cypress got you covered with their best practises as well: So please also look at their best practises to get to know their patterns:
 
-## When should I consider writing an E2E test?
+{% embed url="https://docs.cypress.io/guides/references/best-practices.html" %}
 
-Due to running times it is not advisable to cover every single workflow available. That's why we need a way to prioritize our test cases. The following criteria may help you with that:
+{% hint style="warning" %} We strongly recommend to follow Cypress' own best practises as well. {% endhint %}
 
-* Cover the most general and most used workflows of a feature, e.g. CRUD operations. The term "happy path" describes
+## Amount and prioritisation of end-to-end tests
 
-  those workflows quite well. 
+### Video
 
-* Use risk-analysis: Cover those workflows with E2E tests, which are most vulnerable and would cause most damage 
+At [Shopware Community Day](https://scd.shopware.com/en/) 2020, we gave a talk on how we approach automated testing in Shopware, how far we have come on this journey, and what we have gained so far:
 
-  if broken. 
+{% embed url="https://www.youtube.com/watch?v=sxvQoWF4KS0" %}
 
-* Avoid duplicate coverage: E2E tests should only cover what they can cover, usually big-picture user 
+To sum it up briefly for your End-to-End testing context, End-Tto-End tests are the one tests being slow and thus expensive to maintain. That's why we need a way to prioritize our test cases.
 
-  stories \(workflows\) that contain many components and views. 
+### When should I write an end-to-end test?
 
-* Sometimes unit tests are suited better: For example, use an E2E test to test your application's reaction on a 
-
-  failed validation, not the validation itself.
+You see, due to running times it is not advisable to cover every single workflow available. The following criteria may help you with that:
+* Cover the most general, most used workflows of a feature, e.g. CRUD operations. The term "happy path" describes those workflows quite well.
+* Use risk-analysis: Cover those workflows with E2E tests, which are most vulnerable and would cause most damage if broken.
+* Avoid duplicate coverage: E2E tests should only cover what they can cover, usually big-picture user stories \(workflows\) that contain many components and views.
+* Sometimes unit tests are suited better: For example, use an E2E test to test your application's reaction on a failed validation, not the validation itself.
 
 ## Structure and Scope
 
 The second most important thing is to just test the workflow you explicitly want to test: Any other steps or workflows to get your test running should be done using API operations in the `beforeEach` hook, as we don't want to test them more than once.
-
 For example: if you want to test the checkout process you shouldn't do all the steps like create the sales channel, products and categories although you need them in order to process the checkout. Use the API to create these things and let the test just do the checkout.
 
 You need to focus on the workflow to be tested to ensure minimum test runtimes and to get a valid result of your test case if it fails. Fot this workflow, you have to think like the end-user would do: Focus on usage of your feature, not technical implementation.
 
 Other examples of steps or workflow to cut off the actual tests are:
+* The routines which should only provide the data we need: Just use test fixtures to create this data to have everything available before the test starts.
+* Logging in to the Administration: You need it in almost every Administration test, but writing it in all tests is pure redundancy and way more error sensitive.
 
-* The routines which should only provide the data we need: Just use test fixtures to create this data 
-
-  to have everything available before the test starts.
-
-* Logging in to the Administration: You need it in almost every Administration test, but writing it in all tests is pure redundancy 
-
-  and way more error sensitive.
-
-This [scope practise](https://docs.cypress.io/guides/references/best-practices.html#Organizing-Tests-Logging-In-Controlling-State) is also mentioned in Cypress' best practises as well.
+{% hint style="info" %} This [scope practise](https://docs.cypress.io/guides/references/best-practices.html#Organizing-Tests-Logging-In-Controlling-State) is also mentioned in Cypress' best practises as well.
+{% endhint %}
 
 ## Focus on stability first
 
+### Design independent tests
+
 Don't ever rely on previous tests! You need to test specs in isolation in order to take control of your application’s state. Every test is supposed to be able to run on its own and independent from any other tests. This is crucial to ensure valid test results. You can realize this using test fixtures to create all data you need beforehand and taking care of the cleanup of your application using an appropriate reset method.
+
+### Use a test cleanup strategy
+
 
 ## Choosing selectors
 
@@ -77,3 +78,5 @@ cy.wait('@getData').then((xhr) => {
 });
 ```
 
+{% hint style="info" %} This [best practise](https://docs.cypress.io/guides/references/best-practices#Unnecessary-Waiting) is also mentioned in Cypress' best practises as well. Actually, it can be considered as general best practise to avoid flakiness.
+{% endhint %}
