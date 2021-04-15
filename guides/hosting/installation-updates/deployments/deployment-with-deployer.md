@@ -106,7 +106,7 @@ It's important to know, that you need a database connection to execute this scri
 
 If you don't want to build the assets on the target server \(for performance reasons\), you could execute the `bundle:command` on the target server and download the generated `plugins.json` into your runner's workspace, before executing [`bin/build-js.sh`](https://github.com/shopware/production/blob/6.3/bin/build-js.sh).
 
-This step is defined to be executed on the target server in the `sw:build` job in the [`deploy.php`](deployment-with-deployer.md#deploy-php) and will be executed before transferring the files to the target server:
+This step is defined to be executed on the target server in the `sw:build` job in the [`deploy.php`](deployment-with-deployer.md#deploy-php) and will be executed after transferring the files to the target server:
 
 ```php
 task('sw:build', static function () {
